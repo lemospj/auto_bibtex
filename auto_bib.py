@@ -1,6 +1,8 @@
 from bs4 import BeautifulSoup
 import requests
 from urllib.parse import urljoin
+import which_page
+from bs4.element import Tag
 
 url = 'https://mathscinet.ams.org/mathscinet'
 res = requests.get('https://mathscinet.ams.org/mathscinet')
@@ -28,3 +30,5 @@ else:
     res_submit = requests.post(url_submit, data = req)
 
 print(res_submit.url)
+submit_soup = BeautifulSoup(res_submit.content, 'html.parser')
+which_page.reply(submit_soup)
