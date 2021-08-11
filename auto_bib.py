@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.parse import urljoin
 import which_page
-from bs4.element import Tag
+
 
 url = 'https://mathscinet.ams.org/mathscinet'
 res = requests.get('https://mathscinet.ams.org/mathscinet')
