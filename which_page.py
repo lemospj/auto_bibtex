@@ -42,14 +42,13 @@ def many_pubs(soup):
         new_url = pub_list[int(option) - 1]['link']
         new_res = requests.get(new_url)
         new_soup = BeautifulSoup(new_res.content, 'html.parser')
-        print(new_url)
         return [new_soup, new_url]
     except IndexError: 
         return 0
 
 
-def one_pub(soup, url):
-    tag_form = form_tag(soup)
+def one_pub(soup, url):                             # Used to get to the page with the BibTex entry.
+    tag_form = soup.find_all(form_tag)[0]
     action = tag_form['action']
     s1_value = tag_form.find_all('input', attrs = {'name' : 's1'})[0]['value']
     subm = {'fmt' : 'bibtex', 's1' : s1_value, 'pg1' : 'MR'}
@@ -59,12 +58,18 @@ def one_pub(soup, url):
     return one_soup
 
 
-def reply(soup, url):
+def get_bibtex(soup):
+    tag = soup.pre
+    return tag.get_text()
+
+
+def bibtex_entry(soup, url):
     new_url = url
     new_soup = soup
     tag = soup.select('.pageTitle')[0]                  # Check whether there are no publications by looking at the
     if 'No publications' in tag.get_text():             # text in this tag.
         print('\nNo publications were found.')
+        return 0
     else:
         try:                                            # If there are publications, try to run the routine many_pubs 
             mpubs = many_pubs(soup)
@@ -73,4 +78,4 @@ def reply(soup, url):
         except IndexError:
             pass
         final_soup = one_pub(new_soup, new_url)
-    return new_soup                                     
+        return get_bibtex(final_soup)                                     
