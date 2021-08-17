@@ -26,10 +26,10 @@ def find_bib_path():
                 bib_list.pop()
         else:
             bib_file = input('\nFile name: ')
-            if bib_file[-4:] != '.bib':
-                bib_file = ''.join([bib_file, '.bib'])
-            bib_file = os.path.join(target_path, bib_file)
-    return bib_file
+            if bib_file[-4:] != '.bib':                         # The user will be allowed to enter the file name
+                bib_file = ''.join([bib_file, '.bib'])          # with or without specifying the extension. The
+            bib_file = os.path.join(target_path, bib_file)      # program will detect whether the extension .bib
+    return bib_file                                             # was included or not.
 
 def create_bib(bib_file, bib_entry):
     with open(bib_file, 'a') as bib_write:

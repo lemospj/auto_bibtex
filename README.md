@@ -1,26 +1,17 @@
 # BibTex project Python scripts
 
-## What are these scripts for?
+## What are these scripts?
 
-BibTeX is arguably the most popular reference management software among mathematicians. When using LaTeX as a text editor, BibTeX allows one to store references in a `.bib` file and to automatically generate a reference section at the end of the text. However, if you have ever used BibTeX, you know that you must go through a slightly annoying process: you must find the relevant BibTeX entry online, copy it to your `.bib` file, and then change the label to an easily usable one. The scripts in the folder are a program that automates this process. It uses the Python web scraping package `BeautifulSoup` to search for a given publication on the MathSciNet website (you need to have access to MathSciNet in the first place in order to use this program); it will then copy the BibTeX entry to a `.bib` file indicated by the user, or create that `.bib` file and copy the entry.
+I have been working on a mini project whose aim is to create a Python program which, given an author and a title of a publication, will look in MathSciNet for articles corresponding to these parameters. Once the required publication has been found, the program will either create a `.bib` file with the BibTeX entry associated to this publication in a location indicated by the user, or will add the BibTeX entry to an existing `.bib` file provided by the user. These scripts contain the code I have written.
 
-It is not unlikely that someone has already come up with a better program having the same functionalities of this one, but, at the moment, I am not aware of this. In any case, I decided that the automation of this task would be an interesting small project to take on.
+## What can the program do at the moment?
 
-Comments and suggestions are welcome!
+As far as I am aware, the program is working at the moment, provided that you have access to the MathSciNet database. If you run the function `auto_bib()` in the file `auto_bib.py`, you will be prompted to insert a location for your `.bib` file, an author, a title and the BibTeX label you wish to use. If the program happens to find a single publication matching your search parameters, it will assume that is the one you were looking for and add the entry to the `.bib` file. Otherwise, it will either inform you that no publications have been found, or ask you to choose among an indexed list of publications. After a BibTeX entry has been added to the `.bib` file, you will have the opportunity to add more. At some point in the future I may add some extra functionalities to the program.
 
-## How can I use the scripts?
+It is quite possible that a program like this one already exists. Nevertheless, I decided to undertake this small project mostly because I thought it had the potential to be a fun exercise.
 
-Two things are required in order to successfully run these scripts:
+If you find a bug, please let me know! Suggestions and comments regarding the code are very welcome!
 
-1. You will need access to the MathSciNet database;
-2. You will need Python installed on your computer.
+## Further work
 
-If both of the above are true, then download the folder named `bib_scripts` to a location of your choice. Inside the folder, you will find a Python file called `auto_bib.py`. Run this script using the terminal, i.e. type `python <path_to_auto_bib.py>` in the terminal. The program will then start. Here's a breakdown of what will happen:
-
-1. The program will let you know your current working directory. It will also ask you whether this is the location of your `.bib` (or of your future `.bib`file). You can reply with `y` (yes) or `n` (no) (upper case is fine). Any other reply will cause the process to terminate. If you replied `y`, then go to 2. If you replied `n`, you will be asked to indicate a valid folder for the `.bib` file. You can use relative paths. So, if the folder `bib_scripts` is in the folder where your `.bib` file lives, the path `..` will change the working directory to the one with the `.bib` file.
-2. The program will look for `.bib` files in the location indicated in the previous step. If it finds no `.bib` files or finds more than one, it will prompt you to choose a name for the `.bib` file you want to use or create. If it finds exactly one `.bib` file, it will ask you whether you want to use this as the `.bib` file. If not, you will have to idicate a name for the `.bib` file.
-3. The program will then access MathSciNet and require you to indicate the name of an author and the title of a publication. 
-4. After the information above has been submitted, the program will either find no publications matching your search terms, or it will find exactly one, or will find more than one. 
-   1. If it finds exactly one, it will ask you for the BibTeX entry label you want to use, and then write down the entry in the `.bib` file provided (it will create a `.bib` file if there is no such file with the indicated name).
-   2. If it finds more than one, it print a list of several results, and ask for a choice. After the choice has been made, it will ask for the label and write down the BibTeX entry on the `.bib` file indicated.
-5. Finally, the program will ask you whether you would like to start another search. If so, it will go back to step 3 (the `.bib` file to be used will be the one provided when the program ran for the first time).
+A few things are still left to be done. Most importantly, this program does not check whether the entry we are trying to add to the `.bib` file already exists. It would however be desirable to add this functionality. 

@@ -78,9 +78,9 @@ def bibtex_entry(soup, url):
         print('\nNo publications were found.')
         return 0
     else:
-        try:                                            # If there are publications, try to run the routine many_pubs 
-            mpubs = many_pubs(soup)
-            new_url = mpubs[1]
+        try:                                            # If there are publications, try to run 
+            mpubs = many_pubs(soup)                     # the function many_pubs. If there is only one search result,
+            new_url = mpubs[1]                          # using many_pubs will raise an Index Error. 
             new_soup = mpubs[0]
         except IndexError:
             pass

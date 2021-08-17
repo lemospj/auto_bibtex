@@ -5,19 +5,32 @@ from find_bibentry import bibtex_entry
 import re
 import bib_files
 
-def auto_bib():
+##### MAIN FUNCTION #####
+
+def auto_bib():                                     
     url = 'https://mathscinet.ams.org/mathscinet'
     res = requests.get(url)
     mscinet = res.content
     soup = BeautifulSoup(mscinet, 'html.parser')
 
-    bib_path = bib_files.find_bib_path()
-    bib_build(url, soup, bib_path)
+    bib_path = bib_files.find_bib_path()            # This is the path where the .bib file will go.
+    bib_build(url, soup, bib_path)                  # See below the definition of bib_build.
 
-def more_entries(url, soup, path):
-    more = input('\nDo you wish to add more entries? (Y/N)\n> ')
+
+##########################    
+
+
+
+
+
+def more_entries(url, soup, path):                                  # After creating each BibTeX entry, we will 
+    more = input('\nDo you wish to add more entries? (Y/N)\n> ')    # be asked whether we want to add another one.
     if more.lower() == 'y':
         bib_build(url, soup, path)
+
+
+
+
 
 
 def bib_build(url, soup, path):    
@@ -37,9 +50,9 @@ def bib_build(url, soup, path):
     bib_entry = bibtex_entry(submit_soup, url_submit)
 
     if bib_entry != 0:                              # If bib_entry is 0, then no publications were found.
-        bib_label = input('BibTex label: ')
-        split_entry = re.split('({|,)', bib_entry)
-        split_entry[2] = bib_label
+        bib_label = input('BibTeX label: ')
+        split_entry = re.split('({|,)', bib_entry)  # The place for the BibTeX label in each BibTeX entry is
+        split_entry[2] = bib_label                  # between the first "{" and the first comma.
         bib_entry = ''.join(split_entry)
         bib_files.create_bib(path, bib_entry)
     more_entries(url, soup, path)
